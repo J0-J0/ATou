@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jojo.mapper.AtouSignInRecordMapper">
+  <resultMap id="BaseResultMap" type="com.jojo.model.AtouSignInRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="gmt_end" jdbcType="TIMESTAMP" property="gmtEnd" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+  </resultMap>
+  
+  <select id="selectNowDayRecordByUser" resultMap="BaseResultMap">
+	SELECT * FROM ATOU_SIGN_IN_RECORD WHERE user_id = #{userId} and TO_DAYS(GMT_CREATE) = TO_DAYS(NOW())
+</select>
+  
+</mapper>
