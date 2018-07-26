@@ -9,27 +9,37 @@ public class AtouUser implements Serializable {
     @Id
     private Long id;
 
-    private String wxid;
-
-    private Integer level;
-
     @Column(name = "gmt_create")
     private Date gmtCreate;
 
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
+    private String wxid;
+
+    private Integer level;
+
+    @Column(name = "total_time")
+    private Long totalTime;
+
+    @Column(name = "total_click")
+    private Integer totalClick;
+
     private static final long serialVersionUID = 1L;
 
     public static final String PROP_ID = "id";
+
+    public static final String PROP_GMT_CREATE = "gmtCreate";
+
+    public static final String PROP_GMT_MODIFIED = "gmtModified";
 
     public static final String PROP_WXID = "wxid";
 
     public static final String PROP_LEVEL = "level";
 
-    public static final String PROP_GMT_CREATE = "gmtCreate";
+    public static final String PROP_TOTAL_TIME = "totalTime";
 
-    public static final String PROP_GMT_MODIFIED = "gmtModified";
+    public static final String PROP_TOTAL_CLICK = "totalClick";
 
     /**
      * @return id
@@ -43,6 +53,34 @@ public class AtouUser implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return gmt_create
+     */
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    /**
+     * @param gmtCreate
+     */
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    /**
+     * @return gmt_modified
+     */
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    /**
+     * @param gmtModified
+     */
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 
     /**
@@ -74,31 +112,31 @@ public class AtouUser implements Serializable {
     }
 
     /**
-     * @return gmt_create
+     * @return total_time
      */
-    public Date getGmtCreate() {
-        return gmtCreate;
+    public Long getTotalTime() {
+        return totalTime;
     }
 
     /**
-     * @param gmtCreate
+     * @param totalTime
      */
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
+    public void setTotalTime(Long totalTime) {
+        this.totalTime = totalTime;
     }
 
     /**
-     * @return gmt_modified
+     * @return total_click
      */
-    public Date getGmtModified() {
-        return gmtModified;
+    public Integer getTotalClick() {
+        return totalClick;
     }
 
     /**
-     * @param gmtModified
+     * @param totalClick
      */
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setTotalClick(Integer totalClick) {
+        this.totalClick = totalClick;
     }
 
     @Override
@@ -108,10 +146,12 @@ public class AtouUser implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", wxid=").append(wxid);
-        sb.append(", level=").append(level);
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModified=").append(gmtModified);
+        sb.append(", wxid=").append(wxid);
+        sb.append(", level=").append(level);
+        sb.append(", totalTime=").append(totalTime);
+        sb.append(", totalClick=").append(totalClick);
         sb.append("]");
         return sb.toString();
     }
@@ -129,10 +169,12 @@ public class AtouUser implements Serializable {
         }
         AtouUser other = (AtouUser) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
+            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
             && (this.getWxid() == null ? other.getWxid() == null : this.getWxid().equals(other.getWxid()))
             && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()))
-            && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
-            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()));
+            && (this.getTotalTime() == null ? other.getTotalTime() == null : this.getTotalTime().equals(other.getTotalTime()))
+            && (this.getTotalClick() == null ? other.getTotalClick() == null : this.getTotalClick().equals(other.getTotalClick()));
     }
 
     @Override
@@ -140,10 +182,12 @@ public class AtouUser implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getWxid() == null) ? 0 : getWxid().hashCode());
-        result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
         result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
+        result = prime * result + ((getWxid() == null) ? 0 : getWxid().hashCode());
+        result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
+        result = prime * result + ((getTotalTime() == null) ? 0 : getTotalTime().hashCode());
+        result = prime * result + ((getTotalClick() == null) ? 0 : getTotalClick().hashCode());
         return result;
     }
 }

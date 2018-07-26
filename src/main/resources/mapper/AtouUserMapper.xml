@@ -6,9 +6,20 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="wxid" jdbcType="VARCHAR" property="wxid" />
-    <result column="level" jdbcType="INTEGER" property="level" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="wxid" jdbcType="VARCHAR" property="wxid" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="total_time" jdbcType="BIGINT" property="totalTime" />
+    <result column="total_click" jdbcType="INTEGER" property="totalClick" />
   </resultMap>
+
+	<update id="addOnePoint">
+		UPDATE atou_user SET total_click = total_click + 1 WHERE id = #{userId}
+	</update>
+  
+  	<update id="addPracticeTime">
+		UPDATE atou_statistics SET total_time = total_time + #{practiceTime} 
+		WHERE user_id = #{userId} and course_id = #{courseId}
+	</update>
 </mapper>

@@ -1,5 +1,7 @@
 package com.jojo.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,13 @@ public class AtouUserServiceImpl extends BaseServiceImpl<AtouUser> implements At
 		Example example = buildExample();
 		example.createCriteria().andEqualTo(AtouUser.PROP_WXID, wxid);
 		return selectOneByExample(example);
+	}
+
+	@Override
+	public List<AtouUser> getRankingList() {
+		Example example = buildExample();
+		example.orderBy(AtouUser.PROP_TOTAL_CLICK).desc();
+		return selectByExample(example);
 	}
 
 }

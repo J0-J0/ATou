@@ -12,4 +12,15 @@
     <result column="total_time" jdbcType="BIGINT" property="totalTime" />
     <result column="total_click" jdbcType="INTEGER" property="totalClick" />
   </resultMap>
+
+	<update id="addOnePoint">
+		UPDATE atou_statistics SET total_click = total_click + 1 
+		WHERE user_id = #{userId} and course_id = #{courseId}
+	</update>
+
+	<update id="addPracticeTime">
+		UPDATE atou_statistics SET total_time = total_time + #{practiceTime} 
+		WHERE user_id = #{userId} and course_id = #{courseId}
+	</update>
+  
 </mapper>

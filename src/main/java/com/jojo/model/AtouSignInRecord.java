@@ -21,6 +21,9 @@ public class AtouSignInRecord implements Serializable {
 	@Column(name = "user_id")
 	private Long userId;
 
+	@Column(name = "course_id")
+	private Long courseId;
+
 	private static final long serialVersionUID = 1L;
 
 	public static final String PROP_ID = "id";
@@ -33,21 +36,11 @@ public class AtouSignInRecord implements Serializable {
 
 	public static final String PROP_USER_ID = "userId";
 
-	/**
-	 * 开始打卡
-	 */
+	public static final String PROP_COURSE_ID = "courseId";
+
 	public static final String START = "start";
 
-	/**
-	 * 结束打卡
-	 */
-	public static final String END = "end";
-	
-	/**
-	 * 管理员校准
-	 */
-	public static final String CORRECT = "CORRECT";
-	
+	public static final CharSequence END = "end";
 
 	/**
 	 * @return id
@@ -119,6 +112,20 @@ public class AtouSignInRecord implements Serializable {
 		this.userId = userId;
 	}
 
+	/**
+	 * @return course_id
+	 */
+	public Long getCourseId() {
+		return courseId;
+	}
+
+	/**
+	 * @param courseId
+	 */
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -130,6 +137,7 @@ public class AtouSignInRecord implements Serializable {
 		sb.append(", gmtModified=").append(gmtModified);
 		sb.append(", gmtEnd=").append(gmtEnd);
 		sb.append(", userId=").append(userId);
+		sb.append(", courseId=").append(courseId);
 		sb.append("]");
 		return sb.toString();
 	}
@@ -152,7 +160,9 @@ public class AtouSignInRecord implements Serializable {
 				&& (this.getGmtModified() == null ? other.getGmtModified() == null
 						: this.getGmtModified().equals(other.getGmtModified()))
 				&& (this.getGmtEnd() == null ? other.getGmtEnd() == null : this.getGmtEnd().equals(other.getGmtEnd()))
-				&& (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()));
+				&& (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+				&& (this.getCourseId() == null ? other.getCourseId() == null
+						: this.getCourseId().equals(other.getCourseId()));
 	}
 
 	@Override
@@ -164,6 +174,7 @@ public class AtouSignInRecord implements Serializable {
 		result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
 		result = prime * result + ((getGmtEnd() == null) ? 0 : getGmtEnd().hashCode());
 		result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+		result = prime * result + ((getCourseId() == null) ? 0 : getCourseId().hashCode());
 		return result;
 	}
 }

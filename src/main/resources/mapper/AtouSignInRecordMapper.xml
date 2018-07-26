@@ -10,6 +10,7 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="gmt_end" jdbcType="TIMESTAMP" property="gmtEnd" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
   </resultMap>
   
   <select id="selectNowDayRecordByUser" resultMap="BaseResultMap">
