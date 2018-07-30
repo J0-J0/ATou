@@ -10,4 +10,8 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap">
+	SELECT * FROM atou_course WHERE course_id IN (SELECT course_id FROM atou_user_course WHERE user_id = #{userId})
+</select>
 </mapper>

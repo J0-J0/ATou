@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jojo.model.AtouCourse;
 import com.jojo.model.AtouUser;
 import com.jojo.pojo.Response;
+import com.jojo.service.AtouCourseService;
 import com.jojo.service.AtouUserService;
 
 @Controller
@@ -18,6 +22,9 @@ public class AtouUserApiController {
 
 	@Autowired
 	private AtouUserService atouUserService;
+	
+	@Autowired
+	private AtouCourseService atouCourseService;
 
 	/**
 	 * 用户初始化<br>
@@ -58,15 +65,22 @@ public class AtouUserApiController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getUserInfo")
-	public Response getUserInfo(@RequestParam Long id) {
+	public String getUserInfo(@RequestParam Long id) {
 		Response response = new Response();
 		AtouUser user = atouUserService.selectOneById(id);
 		if (user == null) {
 			response.setFailMessage("没有获取到用户信息");
+			return JSON.toJSONString(response);
 		}
+		
+		List<AtouCourse> courseList = atouCourseService.selectByUserId(id);
+		
 		response.setSuccessMessage("");
-		response.setData(user);
-		return response;
+		JSONObject jsonResponse = JSON.parseObject(JSON.toJSONString(response));
+		jsonResponse.put("user", user);
+		jsonResponse.put("courseList", courseList);
+		
+		return jsonResponse.toJSONString();
 	}
 
 	/**
