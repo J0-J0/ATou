@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- 注解扫描器 -->
-	<context:component-scan base-package="com.jojo.ssm" />
+	<context:component-scan base-package="com.jojo" />
 	<!-- 开启注解功能 -->
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<!-- 保护被引用的资源 -->
