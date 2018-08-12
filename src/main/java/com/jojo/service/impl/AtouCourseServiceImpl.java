@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jojo.mapper.AtouCourseMapper;
 import com.jojo.model.AtouCourse;
+import com.jojo.service.AtouCourseIndexService;
 import com.jojo.service.AtouCourseService;
 
 @Service
@@ -16,6 +17,9 @@ public class AtouCourseServiceImpl extends BaseServiceImpl<AtouCourse> implement
 
 	@Autowired
 	private AtouCourseMapper atouCourseMapper;
+	
+	@Autowired
+	private AtouCourseIndexService atouCourseIndexService;
 
 	@Override
 	public List<AtouCourse> selectByUserId(Long id) {

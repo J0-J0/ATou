@@ -43,13 +43,13 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
 	@Override
 	public int insert(T entity) {
-		setId(entity);
+//		setId(entity);
 		return mapper.insert(entity);
 	}
 
 	@Override
 	public int insertSelective(T entity) {
-		setId(entity);
+//		setId(entity);
 		return mapper.insertSelective(entity);
 	}
 
