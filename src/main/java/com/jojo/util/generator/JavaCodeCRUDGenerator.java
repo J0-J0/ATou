@@ -15,8 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
-import com.jojo.model.AtouCourseContent;
-import com.jojo.model.AtouCourseIndex;
+import com.jojo.model.AtouUserProgress;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -202,7 +201,7 @@ public class JavaCodeCRUDGenerator {
 	}
 
 	public static void main(String[] args) {
-		generate(AtouCourseContent.class, AtouCourseIndex.class);
+		generate(AtouUserProgress.class);
 	}
 
 }
