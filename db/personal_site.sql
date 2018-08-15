@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-08-02 15:39:54
+Date: 2018-08-15 10:24:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,6 +28,11 @@ CREATE TABLE `atou_course` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of atou_course
+-- ----------------------------
+INSERT INTO `atou_course` VALUES ('23465', null, null, 'guitar');
+
+-- ----------------------------
 -- Table structure for atou_course_content
 -- ----------------------------
 DROP TABLE IF EXISTS `atou_course_content`;
@@ -35,6 +40,10 @@ CREATE TABLE `atou_course_content` (
   `id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of atou_course_content
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for atou_course_index
@@ -48,6 +57,17 @@ CREATE TABLE `atou_course_index` (
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of atou_course_index
+-- ----------------------------
+INSERT INTO `atou_course_index` VALUES ('2134', '23465', null, null, 'ergfhrdf');
+INSERT INTO `atou_course_index` VALUES ('3456', '2134', null, null, 'qwertryj');
+INSERT INTO `atou_course_index` VALUES ('2344565', '2134', null, null, '哦哦');
+INSERT INTO `atou_course_index` VALUES ('478158791276232704', '2344565', null, null, 'ewrth');
+INSERT INTO `atou_course_index` VALUES ('478158805578809344', '478158791276232704', null, null, 'wertu');
+INSERT INTO `atou_course_index` VALUES ('478158823253606400', '478158805578809344', null, null, 'etykuyutytdf');
+INSERT INTO `atou_course_index` VALUES ('478158838831251456', '2344565', null, null, 'dergthj');
 
 -- ----------------------------
 -- Table structure for atou_sign_in_record
@@ -64,6 +84,10 @@ CREATE TABLE `atou_sign_in_record` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of atou_sign_in_record
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for atou_statistics
 -- ----------------------------
 DROP TABLE IF EXISTS `atou_statistics`;
@@ -76,6 +100,10 @@ CREATE TABLE `atou_statistics` (
   `total_click` int(10) unsigned DEFAULT NULL COMMENT '总点击',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of atou_statistics
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for atou_user
@@ -93,6 +121,11 @@ CREATE TABLE `atou_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
+-- Records of atou_user
+-- ----------------------------
+INSERT INTO `atou_user` VALUES ('123', null, null, 'qwdefdg', null, null, '11');
+
+-- ----------------------------
 -- Table structure for atou_user_course
 -- ----------------------------
 DROP TABLE IF EXISTS `atou_user_course`;
@@ -103,3 +136,20 @@ CREATE TABLE `atou_user_course` (
   `gmt_create` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of atou_user_course
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for atou_user_progress
+-- ----------------------------
+DROP TABLE IF EXISTS `atou_user_progress`;
+CREATE TABLE `atou_user_progress` (
+  `id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of atou_user_progress
+-- ----------------------------
