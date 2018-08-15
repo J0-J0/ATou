@@ -1,4 +1,4 @@
-package com.jojo.controller.api;
+package com.jojo.controller;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import com.jojo.service.AtouCourseService;
 import com.jojo.service.AtouUserService;
 
 @Controller
-@RequestMapping("/api/atouUser")
-public class AtouUserApiController {
+@RequestMapping("/atouUser")
+public class AtouUserController {
 
 	@Autowired
 	private AtouUserService atouUserService;
@@ -27,6 +27,19 @@ public class AtouUserApiController {
 	private AtouCourseService atouCourseService;
 
 	/**
+	 * 学员管理页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/manage")
+	public String showManage() {
+		return "user/manage";
+	}
+	
+	
+	/*********************************************这里往下是接口，都是接口*******************************************/
+	
+	/**
 	 * 用户初始化<br>
 	 * 初始化的话，肯定要先往用户表里插一条数据，然后再往统计表里插一条数据
 	 * 
@@ -34,7 +47,7 @@ public class AtouUserApiController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/initialize")
+	@RequestMapping("/api/initialize")
 	public Response initialize(@RequestParam String wxid) {
 		Response response = new Response();
 		AtouUser user = atouUserService.selectOneByWxid(wxid);
@@ -64,7 +77,7 @@ public class AtouUserApiController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/getUserInfo")
+	@RequestMapping("/api/getUserInfo")
 	public String getUserInfo(@RequestParam Long id) {
 		Response response = new Response();
 		AtouUser user = atouUserService.selectOneById(id);
@@ -90,7 +103,7 @@ public class AtouUserApiController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping("/getRankingList")
+	@RequestMapping("/api/getRankingList")
 	public Response getRankingList() {
 		Response response = new Response();
 		List<AtouUser> userList = atouUserService.getRankingList();

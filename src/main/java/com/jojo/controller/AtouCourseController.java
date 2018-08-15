@@ -29,11 +29,16 @@ import com.jojo.util.SnowFlakerUtil;
 public class AtouCourseController {
 
 	/**
-	 * jsp地址
+	 * 课程内容编辑页面
 	 */
 	private static final String INDEX = "course/index";
 
 	private static final String REDIRECT_INDEX = "redirect:/atouCourse/index";
+
+	/**
+	 * 课程管理页面
+	 */
+	private static final String MANAGE = "course/manage";
 
 	@Autowired
 	private AtouCourseService atouCourseService;
@@ -42,13 +47,23 @@ public class AtouCourseController {
 	private AtouCourseIndexService atouCourseIndexService;
 
 	/**
-	 * 展示课程首页
+	 * 课程内容编辑页面
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/index")
 	public String index() {
 		return INDEX;
+	}
+
+	/**
+	 * 课程管理页面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/manage")
+	public String showManage() {
+		return MANAGE;
 	}
 
 	/**

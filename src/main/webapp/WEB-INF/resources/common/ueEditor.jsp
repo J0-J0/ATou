@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/view/common/defaultTag.jsp"%>
+<%@ include file="/WEB-INF/resources/common/defaultTag.jsp"%>
 <div>
 <!-- 加载编辑器的容器 -->
     <script id="container" name="content" type="text/plain">
