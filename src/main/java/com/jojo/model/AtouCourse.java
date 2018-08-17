@@ -15,7 +15,8 @@ public class AtouCourse implements Serializable {
 	@Column(name = "gmt_modified")
 	private Date gmtModified;
 
-	private String name;
+	@Column(name = "course_title")
+	private String courseTitle;
 
 	private static final long serialVersionUID = 1L;
 
@@ -72,15 +73,15 @@ public class AtouCourse implements Serializable {
 	/**
 	 * @return name
 	 */
-	public String getName() {
-		return name;
+	public String getCourseTitle() {
+		return courseTitle;
 	}
 
 	/**
 	 * @param name
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setCourseTitle(String name) {
+		this.courseTitle = name;
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class AtouCourse implements Serializable {
 		sb.append(", id=").append(id);
 		sb.append(", gmtCreate=").append(gmtCreate);
 		sb.append(", gmtModified=").append(gmtModified);
-		sb.append(", name=").append(name);
+		sb.append(", name=").append(courseTitle);
 		sb.append("]");
 		return sb.toString();
 	}
@@ -114,7 +115,7 @@ public class AtouCourse implements Serializable {
 						: this.getGmtCreate().equals(other.getGmtCreate()))
 				&& (this.getGmtModified() == null ? other.getGmtModified() == null
 						: this.getGmtModified().equals(other.getGmtModified()))
-				&& (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()));
+				&& (this.getCourseTitle() == null ? other.getCourseTitle() == null : this.getCourseTitle().equals(other.getCourseTitle()));
 	}
 
 	@Override
@@ -124,7 +125,7 @@ public class AtouCourse implements Serializable {
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
 		result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
-		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+		result = prime * result + ((getCourseTitle() == null) ? 0 : getCourseTitle().hashCode());
 		return result;
 	}
 }

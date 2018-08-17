@@ -63,6 +63,7 @@
 			使用%会为所有表生成代码，这个所有的意思是，连接内所有数据库的表，慎用。
 			但又很奇怪，因为连接明明指定了数据库。
 		 -->
-		<table tableName="atou_user_progress" domainObjectName="AtouUserProgress"></table>
+		<table tableName="atou_user" domainObjectName="AtouUser"></table>
+		<table tableName="atou_course_content" domainObjectName="AtouCourseContent"></table>
 	</context>
 </generatorConfiguration>

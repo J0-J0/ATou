@@ -4,10 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="${ctx }/resources/jQuery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="${ctx}/resources/layui/layui.js"></script>
-<script type="text/javascript" src="${ctx}/resources/businessJs/common.js"></script>
-<link href="${ctx}/resources/layui/css/layui.css" type="text/css" rel="stylesheet" />
+<%@ include file="/WEB-INF/resources/common/defaultJsCss.jsp"%>
 <link rel="stylesheet" href="${ctx }/resources/zTree/css/metroStyle/metroStyle.css" type="text/css">
 <script type="text/javascript" src="${ctx}/resources/zTree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="${ctx }/resources/zTree/js/jquery.ztree.excheck.js"></script>

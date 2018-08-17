@@ -8,6 +8,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,14 +33,43 @@ public class AtouCourseController {
 	/**
 	 * 课程内容编辑页面
 	 */
-	private static final String INDEX = "course/index";
+	private static final String INDEX = "course/courseIndex";
 
 	private static final String REDIRECT_INDEX = "redirect:/atouCourse/index";
 
 	/**
 	 * 课程管理页面
 	 */
-	private static final String MANAGE = "course/manage";
+	private static final String MANAGE = "course/courseManage";
+
+//	private static final String REDIRECT_MANAGE = "redirect:/atouCourse/manage";
+
+	/**
+	 * 更新课程页面
+	 */
+	private static final String SAVE_OR_UPDATE_COURSE = "course/saveOrUpdateCourse";
+
+	private Function<AtouCourse, JSONObject> courseToJSONObjectFunction = new Function<AtouCourse, JSONObject>() {
+		@Override
+		public JSONObject apply(AtouCourse input) {
+			JSONObject index = new JSONObject();
+			index.put("parentId", "0");
+			index.put("title", input.getCourseTitle());
+			index.put("id", input.getId().toString());
+			return index;
+		}
+	};
+
+	private Function<AtouCourseIndex, JSONObject> indexToJSONObjectFunction = new Function<AtouCourseIndex, JSONObject>() {
+		@Override
+		public JSONObject apply(AtouCourseIndex input) {
+			JSONObject index = new JSONObject();
+			index.put("parentId", input.getParentId().toString());
+			index.put("title", input.getIndexTitle());
+			index.put("id", input.getId().toString());
+			return index;
+		}
+	};
 
 	@Autowired
 	private AtouCourseService atouCourseService;
@@ -67,13 +98,111 @@ public class AtouCourseController {
 	}
 
 	/**
-	 * 获取所有节点信息
+	 * 显示更新课程页面
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/allNodeInfo")
+	@RequestMapping(value = "/updateCourse/{id}", method = RequestMethod.GET)
+	public String updateCourse(@PathVariable("id") Long id, Model model) {
+		if (id == 0) {
+			model.addAttribute("operationType", Constant.OPERATION_TYPE_SAVE);
+			return SAVE_OR_UPDATE_COURSE;
+		}
+		AtouCourse course = atouCourseService.selectOneByPrimaryKey(id);
+		model.addAttribute("course", course);
+		model.addAttribute("operationType", Constant.OPERATION_TYPE_UPDATE);
+		return SAVE_OR_UPDATE_COURSE;
+	}
+
+	/**
+	 * 保存或新增
+	 * 
+	 * @param course
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/saveOrUpdateCourse", method = RequestMethod.POST)
+	public String saveOrUpdateCourse(AtouCourse course, @RequestParam String operationType, Model model) {
+		String message = "";
+		int row = 0;
+		if (StringUtils.equals(operationType, Constant.OPERATION_TYPE_UPDATE)) {
+			model.addAttribute("course", course);
+			Long id = course.getId();
+			if (id == null || id == 0l) {
+				message = "更新失败，课程id为空";
+				model.addAttribute("message", message);
+				return SAVE_OR_UPDATE_COURSE;
+			}
+			row = atouCourseService.updateByPrimaryKeySelective(course);
+			if (row == 1) {
+				message = "更新成功";
+			} else {
+				message = "更新失败";
+			}
+			model.addAttribute("message", message);
+			model.addAttribute("operationType", Constant.OPERATION_TYPE_UPDATE);
+			return SAVE_OR_UPDATE_COURSE;
+		}
+
+		course.setId(SnowFlakerUtil.getSnowflakeId());
+		row = atouCourseService.insertSelective(course);
+		if (row == 1) {
+			message = "新增成功";
+		} else {
+			message = "新增失败";
+		}
+		model.addAttribute("course", course);
+		model.addAttribute("message", message);
+		model.addAttribute("operationType", Constant.OPERATION_TYPE_UPDATE);
+		return SAVE_OR_UPDATE_COURSE;
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param parentId
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/deleteCourse", method = RequestMethod.POST)
 	@ResponseBody
-	public Response allNodeInfo() {
+	public Response deleteCourse(@RequestParam Long id, HttpSession session) {
+		Response response = new Response();
+		String message = "";
+		int row = atouCourseService.deleteByPrimaryKey(id);
+		if (row > 0) {
+			message = "删除成功";
+			response.setSuccessMessage(message);
+		} else {
+			message = "删除失败";
+			response.setFailMessage(message);
+		}
+		return response;
+	}
+
+	/**
+	 * 获取所有课程信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/allCourseInfo")
+	@ResponseBody
+	public Response allCourseInfo() {
+		Response response = new Response(Response.FAIL, ""); // code必须设成0，这是为layui的table服务的
+		List<AtouCourse> courseList = atouCourseService.selectAll();
+		List<JSONObject> courseList2 = Lists.transform(courseList, courseToJSONObjectFunction);
+		response.setData(courseList2);
+		return response;
+	}
+
+	/**
+	 * 获取所有目录信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/allIndexInfo")
+	@ResponseBody
+	public Response allIndexInfo() {
 		Response response = new Response();
 
 		List<AtouCourse> courseList = atouCourseService.selectAll();
@@ -84,32 +213,13 @@ public class AtouCourseController {
 
 		List<JSONObject> resultList = Lists.newArrayList();
 		response.setData(resultList);
-		List<JSONObject> courseList2 = Lists.transform(courseList, new Function<AtouCourse, JSONObject>() {
-			@Override
-			public JSONObject apply(AtouCourse input) {
-				JSONObject index = new JSONObject();
-				index.put("parentId", "0");
-				index.put("title", input.getName());
-				index.put("id", input.getId().toString());
-				return index;
-			}
-		});
+		List<JSONObject> courseList2 = Lists.transform(courseList, courseToJSONObjectFunction);
 		resultList.addAll(courseList2);
 		List<AtouCourseIndex> courseIndexList = atouCourseIndexService.selectAll();
 		if (CollectionUtils.isEmpty(courseIndexList)) {
 			return response;
 		}
-		List<JSONObject> courseIndexList2 = Lists.transform(courseIndexList,
-				new Function<AtouCourseIndex, JSONObject>() {
-					@Override
-					public JSONObject apply(AtouCourseIndex input) {
-						JSONObject index = new JSONObject();
-						index.put("parentId", input.getParentId().toString());
-						index.put("title", input.getTitle());
-						index.put("id", input.getId().toString());
-						return index;
-					}
-				});
+		List<JSONObject> courseIndexList2 = Lists.transform(courseIndexList, indexToJSONObjectFunction);
 		resultList.addAll(courseIndexList2);
 		return response;
 	}
@@ -122,10 +232,10 @@ public class AtouCourseController {
 	 * @param newTitle
 	 * @return
 	 */
-	@RequestMapping(value = "/saveOrUpdateCourse", method = RequestMethod.POST)
-	public String saveOrUpdateCourse(@RequestParam(name = "treeId") Long id,
+	@RequestMapping(value = "/saveOrUpdateCourseIndex", method = RequestMethod.POST)
+	public String saveOrUpdateCourseIndex(@RequestParam(name = "treeId") Long id,
 			@RequestParam(name = "treeParentId") Long parentId, @RequestParam(name = "newTitle") String newTitle,
-			@RequestParam(name = "operationType") String operationType, HttpSession session) {
+			@RequestParam String operationType, HttpSession session) {
 
 		String message = "";
 		// 暂时只加目录，不加课程
@@ -138,7 +248,7 @@ public class AtouCourseController {
 			AtouCourseIndex courseIndex = new AtouCourseIndex();
 			courseIndex.setId(SnowFlakerUtil.getSnowflakeId());
 			courseIndex.setParentId(id);
-			courseIndex.setTitle(newTitle);
+			courseIndex.setIndexTitle(newTitle);
 			atouCourseIndexService.insertSelective(courseIndex);
 			return REDIRECT_INDEX;
 		}
@@ -147,12 +257,12 @@ public class AtouCourseController {
 		if (parentId == 0) {
 			AtouCourse course = new AtouCourse();
 			course.setId(id);
-			course.setName(newTitle);
+			course.setCourseTitle(newTitle);
 			atouCourseService.updateByPrimaryKeySelective(course);
 		} else {
 			AtouCourseIndex courseIndex = new AtouCourseIndex();
 			courseIndex.setId(id);
-			courseIndex.setTitle(newTitle);
+			courseIndex.setIndexTitle(newTitle);
 			atouCourseIndexService.updateByPrimaryKeySelective(courseIndex);
 		}
 		return REDIRECT_INDEX;
@@ -178,6 +288,6 @@ public class AtouCourseController {
 			}
 		}
 		session.setAttribute("message", message);
-		return "redirect:/atouCourse/index";
+		return REDIRECT_INDEX;
 	}
 }

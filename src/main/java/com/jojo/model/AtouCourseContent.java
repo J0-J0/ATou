@@ -8,9 +8,13 @@ public class AtouCourseContent implements Serializable {
     @Id
     private Long id;
 
+    private String content;
+
     private static final long serialVersionUID = 1L;
 
     public static final String PROP_ID = "id";
+
+    public static final String PROP_CONTENT = "content";
 
     /**
      * @return id
@@ -26,6 +30,20 @@ public class AtouCourseContent implements Serializable {
         this.id = id;
     }
 
+    /**
+     * @return content
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * @param content
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -33,6 +51,7 @@ public class AtouCourseContent implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", content=").append(content);
         sb.append("]");
         return sb.toString();
     }
@@ -49,7 +68,8 @@ public class AtouCourseContent implements Serializable {
             return false;
         }
         AtouCourseContent other = (AtouCourseContent) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()));
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
     @Override
@@ -57,6 +77,7 @@ public class AtouCourseContent implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         return result;
     }
 }

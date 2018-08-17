@@ -110,7 +110,7 @@ $(document).ready(function() {
 function updateCourse() {
 	var treeId = $("#title").attr("name");
 	var treeNode = zTree.getNodeByTId(treeId);
-	var url = "/atou/atouCourse/saveOrUpdateCourse";
+	var url = "/atou/atouCourse/saveOrUpdateCourseIndex";
 	var param = {
 		'treeId' : treeNode.id,
 		'treeParentId' : treeNode.parentId,
@@ -128,7 +128,7 @@ function getAllCourseInfo() {
 	var zNodes = null;
 	$.ajax({
 		type : "get",
-		url : "/atou/atouCourse/allNodeInfo",
+		url : "/atou/atouCourse/allIndexInfo",
 		dataType : 'json',
 		async : false,
 		cache : false

@@ -31,7 +31,7 @@
 	</appender>
 	
 	
-	<root level="ERROR">
+	<root level="INFO">
 		<appender-ref ref="stdout" />
 		<appender-ref ref="rollingFile" />
 	</root>

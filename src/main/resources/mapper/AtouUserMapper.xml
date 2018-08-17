@@ -8,6 +8,8 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="wxid" jdbcType="VARCHAR" property="wxid" />
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="total_time" jdbcType="BIGINT" property="totalTime" />

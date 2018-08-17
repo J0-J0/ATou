@@ -18,7 +18,8 @@ public class AtouCourseIndex implements Serializable {
     @Column(name = "gmt_modified")
     private Date gmtModified;
 
-    private String title;
+    @Column(name = "index_title")
+    private String indexTitle;
 
     private static final long serialVersionUID = 1L;
 
@@ -91,15 +92,15 @@ public class AtouCourseIndex implements Serializable {
     /**
      * @return title
      */
-    public String getTitle() {
-        return title;
+    public String getIndexTitle() {
+        return indexTitle;
     }
 
     /**
      * @param title
      */
-    public void setTitle(String title) {
-        this.title = title;
+    public void setIndexTitle(String title) {
+        this.indexTitle = title;
     }
 
     @Override
@@ -112,7 +113,7 @@ public class AtouCourseIndex implements Serializable {
         sb.append(", parentId=").append(parentId);
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModified=").append(gmtModified);
-        sb.append(", title=").append(title);
+        sb.append(", title=").append(indexTitle);
         sb.append("]");
         return sb.toString();
     }
@@ -133,7 +134,7 @@ public class AtouCourseIndex implements Serializable {
             && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
             && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
             && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
-            && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()));
+            && (this.getIndexTitle() == null ? other.getIndexTitle() == null : this.getIndexTitle().equals(other.getIndexTitle()));
     }
 
     @Override
@@ -144,7 +145,7 @@ public class AtouCourseIndex implements Serializable {
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
         result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
-        result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
+        result = prime * result + ((getIndexTitle() == null) ? 0 : getIndexTitle().hashCode());
         return result;
     }
 }

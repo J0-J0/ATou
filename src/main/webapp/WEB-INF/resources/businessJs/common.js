@@ -34,3 +34,30 @@ function simulatePostForm(url, params) {
 	$(document.body).append(form);
 	form.submit();
 }
+
+/**
+ * 判断字符是否为空的方法
+ * 
+ * @param obj
+ * @returns
+ */
+function isEmpty(obj) {
+	if (typeof obj == "undefined" || obj == null || obj == "") {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * 
+ * @param obj
+ * @returns
+ */
+function isNotEmpty(obj) {
+	if (typeof obj == "undefined" || obj == null || obj == "") {
+		return false;
+	} else {
+		return true;
+	}
+}
