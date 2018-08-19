@@ -6,5 +6,9 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="index_id" jdbcType="BIGINT" property="indexId" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
   </resultMap>
 </mapper>

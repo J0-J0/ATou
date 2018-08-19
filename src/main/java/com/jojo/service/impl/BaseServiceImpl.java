@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.pagehelper.PageHelper;
 import com.jojo.service.BaseService;
 import com.jojo.util.SnowFlakerUtil;
 
@@ -53,6 +54,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		return mapper.insertSelective(entity);
 	}
 
+	@SuppressWarnings("unused")
+	@Deprecated
 	private void setId(T entity) {
 		try {
 			Field field = classOfT.getDeclaredField("id");
@@ -102,7 +105,13 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	 */
 	@Override
 	public T selectOneByExample(Object example) {
-		return null;
+		PageHelper.offsetPage(0, 1, false);
+		List<T> rows = mapper.selectByExample(example);
+		T one = null;
+		if (rows != null && rows.size() > 0) {
+			one = rows.get(0);
+		}
+		return one;
 	}
 
 	@Override

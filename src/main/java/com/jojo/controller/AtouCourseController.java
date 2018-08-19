@@ -1,11 +1,13 @@
 package com.jojo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +21,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.jojo.model.AtouCourse;
+import com.jojo.model.AtouCourseContent;
 import com.jojo.model.AtouCourseIndex;
 import com.jojo.pojo.Constant;
 import com.jojo.pojo.Response;
+import com.jojo.service.AtouCourseContentService;
 import com.jojo.service.AtouCourseIndexService;
 import com.jojo.service.AtouCourseService;
 import com.jojo.util.SnowFlakerUtil;
@@ -66,6 +70,7 @@ public class AtouCourseController {
 			JSONObject index = new JSONObject();
 			index.put("parentId", input.getParentId().toString());
 			index.put("title", input.getIndexTitle());
+			index.put("courseId", input.getCourseId().toString());
 			index.put("id", input.getId().toString());
 			return index;
 		}
@@ -76,6 +81,9 @@ public class AtouCourseController {
 
 	@Autowired
 	private AtouCourseIndexService atouCourseIndexService;
+
+	@Autowired
+	private AtouCourseContentService atouCourseContentService;
 
 	/**
 	 * 课程内容编辑页面
@@ -234,7 +242,8 @@ public class AtouCourseController {
 	 */
 	@RequestMapping(value = "/saveOrUpdateCourseIndex", method = RequestMethod.POST)
 	public String saveOrUpdateCourseIndex(@RequestParam(name = "treeId") Long id,
-			@RequestParam(name = "treeParentId") Long parentId, @RequestParam(name = "newTitle") String newTitle,
+			@RequestParam(name = "treeParentId") Long parentId, @RequestParam Long courseId,
+			@RequestParam(name = "newTitle") String newTitle, @RequestParam String content,
 			@RequestParam String operationType, HttpSession session) {
 
 		String message = "";
@@ -246,10 +255,23 @@ public class AtouCourseController {
 				return REDIRECT_INDEX;
 			}
 			AtouCourseIndex courseIndex = new AtouCourseIndex();
+			Date date = new Date();
 			courseIndex.setId(SnowFlakerUtil.getSnowflakeId());
 			courseIndex.setParentId(id);
+			courseIndex.setCourseId(courseId);
 			courseIndex.setIndexTitle(newTitle);
+			courseIndex.setGmtCreate(date);
 			atouCourseIndexService.insertSelective(courseIndex);
+			AtouCourseContent courseContent = new AtouCourseContent();
+			courseContent.setCourseId(courseId);
+			courseContent.setIndexId(courseIndex.getId());
+			courseContent.setId(SnowFlakerUtil.getSnowflakeId());
+			courseContent.setGmtCreate(date);
+			if (StringUtils.isBlank(content)) {
+				content = DateFormatUtils.format(date, "yyyy-MM-dd HH:mm:ss");
+			}
+			courseContent.setContent(content);
+			atouCourseContentService.insertSelective(courseContent);
 			return REDIRECT_INDEX;
 		}
 
@@ -263,6 +285,7 @@ public class AtouCourseController {
 			AtouCourseIndex courseIndex = new AtouCourseIndex();
 			courseIndex.setId(id);
 			courseIndex.setIndexTitle(newTitle);
+			courseIndex.setGmtModified(new Date());
 			atouCourseIndexService.updateByPrimaryKeySelective(courseIndex);
 		}
 		return REDIRECT_INDEX;
@@ -289,5 +312,19 @@ public class AtouCourseController {
 		}
 		session.setAttribute("message", message);
 		return REDIRECT_INDEX;
+	}
+
+	/**
+	 * 获取所有课程信息
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/getCourseIndexContentInfo")
+	@ResponseBody
+	public Response getCourseIndexContentInfo(@RequestParam Long courseId, @RequestParam Long indexId) {
+		Response response = new Response(Response.SCUCCESS, "");
+		AtouCourseContent content = atouCourseContentService.selectOneByCourseIdAndIndexId(courseId, indexId);
+		response.setData(content);
+		return response;
 	}
 }

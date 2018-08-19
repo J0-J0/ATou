@@ -9,6 +9,9 @@ public class AtouCourseIndex implements Serializable {
     @Id
     private Long id;
 
+    @Column(name = "course_id")
+    private Long courseId;
+
     @Column(name = "parent_id")
     private Long parentId;
 
@@ -25,13 +28,15 @@ public class AtouCourseIndex implements Serializable {
 
     public static final String PROP_ID = "id";
 
+    public static final String PROP_COURSE_ID = "courseId";
+
     public static final String PROP_PARENT_ID = "parentId";
 
     public static final String PROP_GMT_CREATE = "gmtCreate";
 
     public static final String PROP_GMT_MODIFIED = "gmtModified";
 
-    public static final String PROP_TITLE = "title";
+    public static final String PROP_INDEX_TITLE = "indexTitle";
 
     /**
      * @return id
@@ -45,6 +50,20 @@ public class AtouCourseIndex implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return course_id
+     */
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    /**
+     * @param courseId
+     */
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     /**
@@ -90,17 +109,17 @@ public class AtouCourseIndex implements Serializable {
     }
 
     /**
-     * @return title
+     * @return index_title
      */
     public String getIndexTitle() {
         return indexTitle;
     }
 
     /**
-     * @param title
+     * @param indexTitle
      */
-    public void setIndexTitle(String title) {
-        this.indexTitle = title;
+    public void setIndexTitle(String indexTitle) {
+        this.indexTitle = indexTitle;
     }
 
     @Override
@@ -110,10 +129,11 @@ public class AtouCourseIndex implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", courseId=").append(courseId);
         sb.append(", parentId=").append(parentId);
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModified=").append(gmtModified);
-        sb.append(", title=").append(indexTitle);
+        sb.append(", indexTitle=").append(indexTitle);
         sb.append("]");
         return sb.toString();
     }
@@ -131,6 +151,7 @@ public class AtouCourseIndex implements Serializable {
         }
         AtouCourseIndex other = (AtouCourseIndex) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getCourseId() == null ? other.getCourseId() == null : this.getCourseId().equals(other.getCourseId()))
             && (this.getParentId() == null ? other.getParentId() == null : this.getParentId().equals(other.getParentId()))
             && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
             && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
@@ -142,6 +163,7 @@ public class AtouCourseIndex implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getCourseId() == null) ? 0 : getCourseId().hashCode());
         result = prime * result + ((getParentId() == null) ? 0 : getParentId().hashCode());
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
         result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());

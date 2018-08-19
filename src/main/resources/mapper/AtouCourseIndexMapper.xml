@@ -6,9 +6,10 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="index_title" jdbcType="VARCHAR" property="indexTitle" />
   </resultMap>
 </mapper>

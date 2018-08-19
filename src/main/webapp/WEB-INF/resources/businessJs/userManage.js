@@ -6,7 +6,7 @@ layui.use('table', function() {
 	table.on('tool(demo)', function(obj) {
 		var data = obj.data;
 		if (obj.event === 'detail') {
-			layer.msg('id：' + data.id + ' 的查看操作');
+			window.location.href="/atou/atouUserProgress/"+data.id;
 		} else if (obj.event === 'del') {
 			layer.confirm('对应用户信息会丢失，后果自负', function(index) {
 				layer.close(index);

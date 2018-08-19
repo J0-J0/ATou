@@ -9,6 +9,8 @@
 <script type="text/javascript" src="${ctx}/resources/zTree/js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="${ctx }/resources/zTree/js/jquery.ztree.excheck.js"></script>
 <script type="text/javascript" src="${ctx }/resources/zTree/js/jquery.ztree.exedit.js"></script>
+<script type="text/javascript" src="${ctx}/resources/ueEditor/ueditor.config.js"></script>
+<script type="text/javascript" src="${ctx}/resources/ueEditor/ueditor.all.js"></script>
 <script type="text/javascript" src="${ctx}/resources/businessJs/course.js"></script>
 <title>编辑课程</title>
 </head>
@@ -43,7 +45,9 @@
 						</div>
 					</div>
 				</div>
-				<jsp:include page="/WEB-INF/resources/common/ueEditor.jsp" />
+				<!-- 加载编辑器的容器 -->
+			    <script id="container" name="content" type="text/plain">
+    			</script>
 			</div>
 		</div>
 	</div>
