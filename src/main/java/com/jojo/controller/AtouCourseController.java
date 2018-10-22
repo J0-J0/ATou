@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,6 +77,8 @@ public class AtouCourseController {
 			return index;
 		}
 	};
+
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private AtouCourseService atouCourseService;
@@ -246,6 +250,8 @@ public class AtouCourseController {
 			@RequestParam(name = "newTitle") String newTitle, @RequestParam String content,
 			@RequestParam String operationType, HttpSession session) {
 
+		logger.error("传入的content：{}", content);
+
 		String message = "";
 		// 暂时只加目录，不加课程
 		if (StringUtils.equals(operationType, Constant.OPERATION_TYPE_SAVE)) {
@@ -287,6 +293,20 @@ public class AtouCourseController {
 			courseIndex.setIndexTitle(newTitle);
 			courseIndex.setGmtModified(new Date());
 			atouCourseIndexService.updateByPrimaryKeySelective(courseIndex);
+
+			AtouCourseContent courseContent = atouCourseContentService.selectOneByCourseIdAndIndexId(courseId, id);
+			if (courseContent != null) {
+				courseContent.setContent(content);
+				courseContent.setGmtModified(new Date());
+				atouCourseContentService.updateByIndexIdSelective(courseContent);
+			} else {
+				courseContent = new AtouCourseContent();
+				courseContent.setCourseId(courseId);
+				courseContent.setIndexId(courseIndex.getId());
+				courseContent.setContent(content);
+				courseContent.setGmtCreate(new Date());
+				atouCourseContentService.insertSelective(courseContent);
+			}
 		}
 		return REDIRECT_INDEX;
 	}

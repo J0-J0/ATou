@@ -8,7 +8,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="course_title" jdbcType="VARCHAR" property="courseTitle" />
   </resultMap>
   
   <select id="selectByUserId" resultMap="BaseResultMap">

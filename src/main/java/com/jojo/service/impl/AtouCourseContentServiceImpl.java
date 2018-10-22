@@ -21,4 +21,12 @@ public class AtouCourseContentServiceImpl extends BaseServiceImpl<AtouCourseCont
 		return selectOneByExample(example);
 	}
 
+	@Override
+	public int updateByIndexIdSelective(AtouCourseContent content) {
+		Example example = buildExample();
+		example.createCriteria().andEqualTo(AtouCourseContent.PROP_COURSE_ID, content.getCourseId())
+				.andEqualTo(AtouCourseContent.PROP_INDEX_ID, content.getIndexId());
+		return updateByExampleSelective(content, example);
+	}
+
 }

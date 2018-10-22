@@ -9,5 +9,5 @@ import tk.mybatis.mapper.common.Mapper;
 
 public interface AtouCourseMapper extends Mapper<AtouCourse> {
 
-	List<AtouCourse> selectByUserId(@Param(value = "userId") Long userId);
+	List<AtouCourse> selectByUserId(@Param("id") Long id);
 }
